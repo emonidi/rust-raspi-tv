@@ -1,0 +1,39 @@
+#EXTM3U
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XH6YqJO.png" group-title="BULGARIA",Nova TV
+https://e100-nlds107.cdn.bg/nlds/novaplay2/novaent/as/live/novaent_hd_1600_pc.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/L23vmQy.png" group-title="BULGARIA",Bulgaria ON AIR
+http://ios.cdn.bg:2006/fls/bonair.stream/chunklist_w2129214630.m3u8?fluxustv.m3u8
+#EXTINF:-1,EURONEWS
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/67409
+#EXTINF:-1,SKY NEWS
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/7173
+#EXTINF:-1,ALJAZEERA ENGLISH
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/1661
+#EXTINF:-1,BBC WORLD NEWS
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/9546
+#EXTINF:0 tvg-language="English" tvg-country="US" tvg-logo="https://i.imgur.com/GBIoooY.jpg" tvg-name="BLOOMBERG" tvg-id="BLOOMBERG" group-title="News",EN: BLOOMBERG EUROPE
+https://liveprodeuwest.akamaized.net/eu1/Channel-EUTVqvs-AWS-ireland-1/Source-EUTVqvs-1000-1_live.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/BBC_News.svg/1280px-BBC_News.svg.png" group-title="UK",BBC News
+https://edge-1192-ch-gv.filmon.com/live/27.high.stream/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/kJcwaOU.png" group-title="24/7 WORLD NEWS",DW (DE) (Opt-1)
+http://dwstream4-lh.akamaihd.net/i/dwstream4_live@131329/master.m3u8
+#EXTINF:-1 tvg-logo="https://static.iptv-epg.com/co/AMC.co.png" group-title="UK",AMC
+http://84.22.33.254/unicast.amc/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/jEtKLkp.png" group-title="UK",SciFi (Opt-1)
+http://84.22.33.254/unicast.scifi/index.m3u8
+#EXTINF:-1,*DISCOVERY HD (CDN)
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/319
+#EXTINF:-1,DISCOVERY HD (USA)
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/56250
+#EXTINF:-1,DISCOVERY SCIENCE HD
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/320
+#EXTINF:-1,SKY DISCOVERY TURBO
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/1767
+#EXTINF:-1,SKY DISCOVERY SHED
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/1761
+#EXTINF:-1,SKY DISCOVERY SCIENCE
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/1766
+#EXTINF:-1,SKY DISCOVERY HISTORY
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/1765
+#EXTINF:-1,SKY DISCOVERY
+http://ok2.se:8000/0a06F7UCYXSqjMsZY/bae3F9Ua1tji2hcZp/1764
