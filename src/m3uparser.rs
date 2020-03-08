@@ -40,7 +40,7 @@ impl Parser {
             }
         });
         
-        let mut urls_iter = urls.clone();
+        let urls_iter = urls.clone();
         infos.into_iter().enumerate().for_each(|(i,info)|{
             let ustr = String::from(&urls_iter[i]);
             self.channels.push(Channel{

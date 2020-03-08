@@ -1,17 +1,15 @@
 use std::process::{Command, Stdio};
 use std::io::{BufRead, BufReader};
-use std::io::{copy, Read, Write};
-use std::collections::HashMap;
-use m3u::{Reader, Entries, Entry};
 mod m3uparser;
 use m3uparser::Channel;
+mod player;
+use player::Player;
+
 fn main() {
-//   start_remote();
     
-  
     let mut is_playing:bool = false;
     let mut index = 0;
-   
+    let mut  player:Option<Player> = None;
     let output = Command::new("cec-client")
     .stdout(Stdio::piped())
     .spawn()
@@ -24,92 +22,72 @@ fn main() {
 
     let mut parser = m3uparser::Parser::new(String::from("res/playlist.m3u"));
     let channels = parser.parse();
-  
-
-    reader
-    .lines()
-    .filter_map(|line| line.ok())
-    .for_each(|line| {
+    let mut lines = reader.lines();
+    
+    loop {
+        let line = lines.next().unwrap().unwrap();
+       
         if(has_keypress(&line)){
             let mut split:Vec<&str> = line.rsplit_terminator("key pressed:").collect();
             split = split[0].split("(").collect();
             let command = split[0].trim();
             println!("IS PLAYING:{}",is_playing);
             println!("COMMAND:{}",command);
- 
+            
             match command {
                 "data" => {
-                    if is_playing {
-                        stop_play();
-                        // index = 0;
-                        is_playing = false;
-                    }else{
-                        play_channel(&channels[0]);
+                    if !is_playing{
+                        player = Some(Player::new());
                         is_playing = true;
+                        index+=1;
+                    }else{
+                       match &mut player{
+                           Some(player) => {
+                                player.quit();
+                                index = 0;
+                           }
+                           None => {
+
+                           }
+                       }
+                       player = None;
+                       is_playing = false;
                     }
                 }
+
                 "channel up" => {
-                     index += 1;
-                     play_channel(&channels[index]);
-                     
-                 },
-                 "channel down"=>{
-                    index -= 1;
-                    play_channel(&channels[index]);
+                    if index < channels.len() - 1 {
+                        match &mut player{
+                            Some(player) => {
+                                println!("{:#?}", &channels[index]);
+                                println!("PLAY_NEXT");
+                                player.play_next(&channels[index]);
+                                index +=1;
+                            },
+                            None => {}
+                        }
+                    }
                 }
-                 _ => {
- 
-                 }
+
+                "channel down" => {
+                    if index > 0 {
+                        match &mut player{
+                            Some(player) => {
+                                println!("PLAY_NEXT");
+                                player.play_prev(&channels[index]);
+                                index -=1;
+                            },
+                            None => {}
+                        }
+                    }
+                }
+                _ => {
+
+                }
             }
         }
-    });
-
-    
+    }    
 }
-
-fn play_channel(channel:&Channel){
-
-    let name = &channel.name;
-    let logo = match &channel.logo {
-        Some(url) => url,
-        None => ""
-    };
-    
-    let not = Command::new("kodi-send")
-    .arg("-a")
-    .arg(format!("Notification(,{},10000,{})", name.as_ref().unwrap(),logo))
-    .output()
-    .unwrap();
-
-    let output = Command::new("kodi-send")
-    .arg("-a")
-    .arg(format!("PlayMedia({})", channel.url))
-    .output()
-    .unwrap();
-
-    println!("{:?}", output);
-}
-
-fn start_play(url:String){
-    let output = Command::new("kodi-send")
-    .arg("-a")
-    .arg(format!("PlayMedia({})", url))
-    .output()
-    .unwrap();
-
-    println!("{:?}", output);
-}
-
-fn stop_play(){
-    let output = Command::new("kodi-send")
-    .arg("-a")
-    .arg("PlayerControl(Stop)")
-    .output()
-    .unwrap();
-
-    println!("{:?}", output);
-}
-
 
 fn has_keypress(line:&String)-> bool {
     line.contains("key pressed:") &&
