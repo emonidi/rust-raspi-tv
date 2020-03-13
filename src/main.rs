@@ -38,6 +38,15 @@ fn main() {
                 "data" => {
                     if !is_playing{
                         player = Some(Player::new());
+                        match &mut player{
+                            Some(player) => {
+                                println!("{:#?}", &channels[index]);
+                                println!("PLAY_NEXT");
+                                player.play_next(&channels[index]);
+                                index +=1;
+                            },
+                            None => {}
+                        }
                         is_playing = true;
                         index+=1;
                     }else{
