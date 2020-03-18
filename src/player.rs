@@ -18,10 +18,13 @@ impl Player {
         mpv_builder.set_option("vo","gpu").unwrap();
         mpv_builder.set_option("fs","yes").unwrap();
         // mpv_builder.set_option("force-window","yes").unwrap();
-        mpv_builder.set_option("osd-bar","yes").unwrap();
-        mpv_builder.set_option("scale","ewa_lanczossharp").unwrap();
+        mpv_builder.set_option("ytdl","yes").unwrap();
+        mpv_builder.set_option("ytdl-format","best").unwrap();
+        mpv_builder.set_option("ontop","no").unwrap();
+        mpv_builder.set_option("player-operation-mode","pseudo-gui").unwrap();
         
-        match mpv_builder.set_option("script","./res/notify.lua"){
+        
+        match mpv_builder.set_option("load-stats-overlay","yes"){
             Ok(r) => {println!("{:?}",r)},
             Err(e) => {println!("{:?}",e)}
         }
@@ -66,17 +69,17 @@ impl Player {
     //     .expect("");
 
         let c1 = self.mpv.command(&["loadfile",&channel.url]).unwrap();
-        self.mpv.command(&["osd-msg1",&channel.name.as_ref().unwrap()]);
-        println!("{:?}", c1);
+        self.mpv.command(&["show-text",&channel.name.as_ref().unwrap()]);
+        
+
        
         Player::notify(channel);
     }
 
     pub fn play_prev(&mut self,channel:&Channel){
         let c1 = self.mpv.command(&["loadfile",&channel.url]).unwrap();
-        self.mpv.command(&["osd-msg1",&channel.name.as_ref().unwrap()]);
-        OsdString::get_("HELLO!");
-        println!("{:?}", c1);
+        self.mpv.command(&["show-text",&channel.name.as_ref().unwrap()]);
+       
 
         Player::notify(channel);
      }

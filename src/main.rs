@@ -44,11 +44,10 @@ fn main() {
                                 println!("PLAY_NEXT");
                                 player.play_next(&channels[index]);
                                 index +=1;
+                                is_playing = true;
                             },
                             None => {}
                         }
-                        is_playing = true;
-                        index+=1;
                     }else{
                        match &mut player{
                            Some(player) => {
