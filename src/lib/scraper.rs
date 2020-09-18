@@ -5,7 +5,7 @@ use scraper::{Html, Selector};
 
 #[derive(Debug)]
 pub struct NScraper {
-    client: Client,
+    client: Client
 }
 
 impl NScraper {
@@ -17,7 +17,7 @@ impl NScraper {
         NScraper { client }
     }
 
-    pub fn sign_in(&self) {
+    pub fn sign_in(&self,user:String,pass:String) {
         let sign_in_get_response = self
             .client
             .get("https://neterra.tv/sign-in")
@@ -37,8 +37,8 @@ impl NScraper {
 
         let login_form = reqwest::blocking::multipart::Form::new()
             .text("_token", token.to_string())
-            .text("username", "pchoutov")
-            .text("password", "Alex2501");
+            .text("username", user)
+            .text("password", pass);
 
         self.client
             .post("https://neterra.tv/sign-in")

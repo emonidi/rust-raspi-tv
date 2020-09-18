@@ -6,8 +6,21 @@ mod lib;
 mod player;
 use lib::scraper::NScraper;
 use player::Player;
+use std::env::vars;
 
 fn main() {
+    let mut user = String::new();
+    let mut pass = String::new();
+
+    for (key, value) in vars() {
+        if key == "N_USER" {
+            user = String::from(&value)
+        }
+        if key == "N_PASS" {
+            pass = String::from(&value)
+        };
+    }
+
     Command::new("notify-send")
         .arg("DOWNLOADING CHANNELS")
         .spawn()
@@ -28,7 +41,7 @@ fn main() {
     let mut lines = reader.lines();
 
     let scraper = NScraper::new();
-    scraper.sign_in();
+    scraper.sign_in(user, pass);
     let channels = scraper.get_live_channels();
 
     Command::new("notify-send")
