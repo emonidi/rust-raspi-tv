@@ -1,6 +1,7 @@
 use std::process::{Command, Stdio, Child};
 use std::io::{BufRead, BufReader};
-use crate::m3uparser::Channel;
+// use crate::m3uparser::Channel;
+use crate::lib::channel::{Channel};
 use std::env::*;
 use mpv::*;
 // #[derive(Debug)]
@@ -15,13 +16,18 @@ impl Player {
         set_var("DISPLAY",":0");
         let mut mpv_builder = mpv::MpvHandlerBuilder::new().expect("Failed to init MPV builder");
         mpv_builder.try_hardware_decoding().unwrap();
-        mpv_builder.set_option("vo","gpu").unwrap();
+        mpv_builder.set_option("vo","opengl").unwrap();
         mpv_builder.set_option("fs","yes").unwrap();
-        // mpv_builder.set_option("force-window","yes").unwrap();
         mpv_builder.set_option("ytdl","yes").unwrap();
-        mpv_builder.set_option("ytdl-format","best").unwrap();
+        mpv_builder.set_option("vd-lavc-threads","4").unwrap();
         mpv_builder.set_option("ontop","no").unwrap();
-        mpv_builder.set_option("player-operation-mode","pseudo-gui").unwrap();
+        mpv_builder.set_option("force-window","yes").unwrap();
+        mpv_builder.set_option("osc","yes").unwrap();
+        mpv_builder.set_option("hwdec", "rpi-copy").unwrap();
+        // mpv_builder.set_option("osd-level","3").unwrap();
+        // mpv_builder.set_option("opengl-glfinish","yes").unwrap();
+        // mpv_builder.set_option("opengl-swapinterval","0").unwrap();
+        
         
         
         match mpv_builder.set_option("load-stats-overlay","yes"){
@@ -69,38 +75,27 @@ impl Player {
     //     .expect("");
 
         let c1 = self.mpv.command(&["loadfile",&channel.url]).unwrap();
-        self.mpv.command(&["show-text",&channel.name.as_ref().unwrap()]);
-        
+        self.mpv.command(&["show-text",&channel.title]);
 
-       
+        // {"command":["external-file",""]}
         Player::notify(channel);
     }
 
     pub fn play_prev(&mut self,channel:&Channel){
         let c1 = self.mpv.command(&["loadfile",&channel.url]).unwrap();
-        self.mpv.command(&["show-text",&channel.name.as_ref().unwrap()]);
+        self.mpv.command(&["show-text",&channel.title]);
        
 
         Player::notify(channel);
      }
 
     fn notify(channel:&Channel){
-        let name = match &channel.name {
-            Some(name) => String::from(name), 
-            None => String::from("")
-        };
-
-        let icon = match &channel.logo {
-            Some(logo) => String::from(logo),
-            None => String::from("")
-        };
-
         Command::new("notify-send")
-        .arg(name)
+        .arg(&channel.title)
         .arg("-u")
         .arg("critical")
         .arg("-i")
-        .arg(icon)
+        .arg(&channel.img_url)
         .output()
         .expect("");
      }

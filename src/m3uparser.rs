@@ -18,7 +18,6 @@ impl Parser {
     pub fn new(path:String) -> Self {
         let file = File::open(&path).unwrap();
         
-        
         Self{
             path:path,
             file:file, 
@@ -39,6 +38,8 @@ impl Parser {
                 urls.push(l)
             }
         });
+
+        
         
         let urls_iter = urls.clone();
         infos.into_iter().enumerate().for_each(|(i,info)|{
